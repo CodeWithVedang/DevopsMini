@@ -10,14 +10,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat "cd /d %LOCAL_DIR% && docker-compose build"
+                    bat 'docker-compose -f "%LOCAL_DIR%\\docker-compose.yml" build'
                 }
             }
         }
         stage('Deploy with Ansible on WSL') {
             steps {
                 script {
-                    bat "wsl ansible-playbook %WSL_ANSIBLE_SCRIPT%"
+                    bat 'wsl --distribution Ubuntu-22.04 ansible-playbook "%WSL_ANSIBLE_SCRIPT%"'
                 }
             }
         }

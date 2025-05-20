@@ -1,0 +1,30 @@
+---
+- name: Deploy Medical Management System
+  hosts: localhost
+  tasks:
+    - name: Ensure old containers are removed
+      docker_compose:
+        project_name: medical_management
+        state: absent
+      ignore_errors: yes
+    - name: Run Docker Compose
+      docker_compose:
+        project_name: medical_management
+        state: present
+        build: yes
+        files:
+          - /mnt/d/Vedang/SEM_2_MCA/Mini Project/DO/DEVMIN/medical_management_system/docker-compose.yml
+    - name: Wait for application to be ready
+      wait_for:
+        host: localhost
+        port: 8080
+        state: started
+        timeout: 30
+    - name: Verify application
+      uri:
+        url: http://localhost:8080/index.php
+        status_code: 200
+      register: result
+    - name: Display verification result
+      debug:
+        msg: "Application is running: {{ result.status }}"

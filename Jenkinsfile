@@ -7,10 +7,17 @@ pipeline {
         WSL_ANSIBLE_SCRIPT = '/mnt/d/Vedang/SEM_2_MCA/Mini Project/DO/DEVMIN/medical_management_system/devopsdeploy.yml'
     }
     stages {
-        stage('Test WSL') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    bat 'wsl bash -c "ls /mnt/d"'
+                    bat 'docker-compose -f "%LOCAL_DIR%\\docker-compose.yml" build'
+                }
+            }
+        }
+        stage('Deploy with Ansible on WSL') {
+            steps {
+                script {
+                    bat 'wsl -c "ansible-playbook %WSL_ANSIBLE_SCRIPT%"'
                 }
             }
         }

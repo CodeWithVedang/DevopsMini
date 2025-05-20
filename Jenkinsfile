@@ -17,7 +17,7 @@ pipeline {
         stage('Deploy with Ansible on WSL') {
             steps {
                 script {
-                    bat 'wsl ls'
+                    bat 'wsl --list --verbose'
                 }
             }
         }

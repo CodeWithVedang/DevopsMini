@@ -17,11 +17,10 @@ pipeline {
         stage('Copy Files to WSL') {
             steps {
                 script {
-                    bat 'wsl -d Ubuntu pwd'
-                    bat 'wsl -d Ubuntu ls'
-                    bat 'wsl -d Ubuntu mkdir -p /home/jenkins/devopsprjv1 || echo "Directory creation failed"'
-                    bat 'wsl -d Ubuntu chown vedang:vedang /home/jenkins/devopsprjv1 || echo "Chown failed"'
-                    bat 'wsl -d Ubuntu cp /mnt/d/Vedang/SEM_2_MCA/Mini_Project/DO/DEVMIN/medical_management_system/devopsdeploy.yml /home/jenkins/devopsprjv1/ || echo "Copy failed"'
+                    bat 'wsl -d Ubuntu sudo mkdir -p /home/jenkins/devopsprjv1 || echo "Directory creation failed"'
+                    bat 'wsl -d Ubuntu sudo chown vedang:vedang /home/jenkins/devopsprjv1 || echo "Chown failed"'
+                    bat 'wsl -d Ubuntu sudo cp /mnt/d/Vedang/SEM_2_MCA/Mini_Project/DO/DEVMIN/medical_management_system/devopsdeploy.yml /home/jenkins/devopsprjv1/ || echo "Copy failed"'
+                    bat 'wsl -d Ubuntu sudo cp /mnt/d/Vedang/SEM_2_MCA/Mini_Project/DO/DEVMIN/medical_management_system/docker-compose.yml /home/jenkins/devopsprjv1/ || echo "Copy failed"'
                 }
             }
         }

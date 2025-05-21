@@ -1,6 +1,8 @@
 ---
 - name: Deploy Medical Management System
   hosts: localhost
+  vars:
+    ansible_python_interpreter: /home/vedang/ansible_venv/bin/python3
   tasks:
     - name: Ensure old containers are removed
       docker_compose:

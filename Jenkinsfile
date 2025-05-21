@@ -14,6 +14,14 @@ pipeline {
                 }
             }
         }
+        stage('Setup Python Environment in WSL') {
+            steps {
+                script {
+                    bat 'wsl -d Ubuntu python3 -m venv /home/vedang/ansible_venv || echo "Virtual environment creation failed"'
+                    bat 'wsl -d Ubuntu /home/vedang/ansible_venv/bin/pip install docker || echo "Docker module installation failed"'
+                }
+            }
+        }
         stage('Copy Files to WSL') {
             steps {
                 script {
@@ -21,15 +29,14 @@ pipeline {
                     bat 'wsl -d Ubuntu ls'
                     bat 'wsl -d Ubuntu sudo mkdir -p /home/jenkins/devopsprjv1 || echo "Directory creation failed"'
                     bat 'wsl -d Ubuntu sudo chown vedang:vedang /home/jenkins/devopsprjv1 || echo "Chown failed"'
-                    bat 'wsl -d Ubuntu sudo cp /mnt/c/ProgramData/Jenkins/.jenkins/workspace/medical_management_pipeline/devopsdeploy.yml /home/jenkins/devopsprjv1/ || echo "Copy failed"'
-                    bat 'wsl -d Ubuntu sudo cp /mnt/c/ProgramData/Jenkins/.jenkins/workspace/medical_management_pipeline/docker-compose.yml /home/jenkins/devopsprjv1/ || echo "Copy failed"'
+                    bat 'wsl -d Ubuntu sudo cp -r /mnt/c/ProgramData/Jenkins/.jenkins/workspace/medical_management_pipeline/* /home/jenkins/devopsprjv1/ || echo "Copy failed"'
                 }
             }
         }
         stage('Deploy with Ansible on WSL') {
             steps {
                 script {
-                    bat 'wsl -d Ubuntu ansible-playbook %WSL_ANSIBLE_SCRIPT%'
+                    bat 'wsl -d Ubuntu /home/vedang/ansible_venv/bin/ansible-playbook %WSL_ANSIBLE_SCRIPT%'
                 }
             }
         }

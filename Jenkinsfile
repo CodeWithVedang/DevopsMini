@@ -19,6 +19,7 @@ pipeline {
                 script {
                     bat 'wsl -d Ubuntu python3 -m venv /home/vedang/ansible_venv || echo "Virtual environment creation failed"'
                     bat 'wsl -d Ubuntu /home/vedang/ansible_venv/bin/pip install docker ansible || echo "Module installation failed"'
+                    bat 'wsl -d Ubuntu /home/vedang/ansible_venv/bin/ansible-galaxy collection install community.docker || echo "Collection installation failed"'
                 }
             }
         }

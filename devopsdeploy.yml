@@ -5,12 +5,12 @@
     ansible_python_interpreter: /home/vedang/ansible_venv/bin/python3
   tasks:
     - name: Ensure old containers are removed
-      docker_compose:
+      community.docker.docker_compose_v2:
         project_name: medical_management
         state: absent
       ignore_errors: yes
     - name: Run Docker Compose
-      docker_compose:
+      community.docker.docker_compose_v2:
         project_name: medical_management
         state: present
         build: yes

@@ -8,14 +8,14 @@
       community.docker.docker_compose_v2:
         project_name: medical_management
         state: absent
+        project_src: /home/jenkins/devopsprjv1
       ignore_errors: yes
     - name: Run Docker Compose
       community.docker.docker_compose_v2:
         project_name: medical_management
         state: present
-        build: yes
-        files:
-          - /home/jenkins/devopsprjv1/docker-compose.yml
+        build: always
+        project_src: /home/jenkins/devopsprjv1
     - name: Wait for application to be ready
       wait_for:
         host: localhost

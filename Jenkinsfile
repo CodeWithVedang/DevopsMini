@@ -17,7 +17,7 @@ pipeline {
         stage('Deploy with Ansible on WSL') {
             steps {
                 script {
-                    bat 'wsl Ubuntu ansible-playbook %WSL_ANSIBLE_SCRIPT%'
+                    bat 'wsl -d Ubuntu ansible-playbook %WSL_ANSIBLE_SCRIPT%'
                 }
             }
         }
